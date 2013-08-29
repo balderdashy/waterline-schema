@@ -9,10 +9,10 @@
     }
   ],
   "dependencies": {
-
+    "underscore": "1.4.4"
   },
   "devDependencies": {
-
+    "mocha": "1.9.x"
   },
   "keywords": [
     "mvc",
@@ -27,7 +27,7 @@
   "homepage": "http://github.com/balderdashy/waterline-schema",
   "main": "",
   "scripts": {
-
+    "test": "mocha test --recursive"
   },
   "engines": {
     "node": "*"
