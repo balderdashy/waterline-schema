@@ -61,6 +61,16 @@ describe('JoinTables', function() {
       assert(obj.bar_foo.attributes.bar.on === 'id');
       assert(obj.bar_foo.attributes.bar.groupKey === 'bar');
     });
+
+    it('should update the parent collection to point to the join table', function() {
+      var obj = new JoinTables(collections);
+
+      assert(obj.foo.attributes.bars.references === 'bar_foo');
+      assert(obj.foo.attributes.bars.on === 'foo_id');
+
+      assert(obj.bar.attributes.foos.references === 'bar_foo');
+      assert(obj.bar.attributes.foos.on === 'bar_id');
+    });
   });
 
 
