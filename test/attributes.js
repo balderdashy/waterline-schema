@@ -18,7 +18,6 @@ describe('Attributes', function() {
           bar: 'string',
           fn: function() {}
         }
-
       };
     });
 
@@ -55,13 +54,11 @@ describe('Attributes', function() {
           bar: 'string',
           fn: function() {}
         }
-
       };
     });
 
     it('should add auto attributes to the definition', function() {
       var obj = new Attributes({ foo: collection });
-
       assert(obj.foo);
       assert(Object.keys(obj.foo.attributes).length === 5);
       assert(obj.foo.attributes.foo);
@@ -73,7 +70,6 @@ describe('Attributes', function() {
 
     it('should inject flags into the collection', function() {
       var obj = new Attributes({ foo: collection });
-
       assert(collection.prototype.autoPK);
       assert(collection.prototype.autoCreatedAt);
       assert(collection.prototype.autoUpdatedAt);
@@ -81,8 +77,20 @@ describe('Attributes', function() {
 
     it('should normalize tableName to identity', function() {
       var obj = new Attributes({ foo: collection });
-
       assert(collection.prototype.identity === 'foo');
+    });
+
+    it('should add a primary key field', function() {
+      var obj = new Attributes({ foo: collection });
+      assert(obj.foo.attributes.id);
+      assert(obj.foo.attributes.id.primaryKey);
+      assert(obj.foo.attributes.id.unique);
+    });
+
+    it('should add in timestamps', function() {
+      var obj = new Attributes({ foo: collection });
+      assert(obj.foo.attributes.createdAt);
+      assert(obj.foo.attributes.updatedAt);
     });
   });
 
