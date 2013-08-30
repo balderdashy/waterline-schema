@@ -37,7 +37,7 @@ describe('JoinTables', function() {
 
     it('should add a junction table for a many to many relationship', function() {
       var obj = new JoinTables(collections);
-      console.log(obj);
+
       assert(obj.bar_foo);
       assert(obj.bar_foo.identity === 'bar_foo');
       assert(obj.bar_foo.tables.indexOf('bar') > -1);
