@@ -30,7 +30,7 @@ describe('ForeignKeys', function() {
      *
      * attributes: {
      *   foo: {
-     *     columnName: 'foo_id',
+     *     columnName: 'foo',
      *     type: 'integer',
      *     foreignKey: true,
      *     references: 'foo',
@@ -42,7 +42,7 @@ describe('ForeignKeys', function() {
     it('should add a foreign key mapping to the bar collection', function() {
       var obj = new ForeignKeys(collections);
       assert(obj.bar.attributes.foo);
-      assert(obj.bar.attributes.foo.columnName === 'foo_foo_id');
+      assert(obj.bar.attributes.foo.columnName === 'foo');
       assert(obj.bar.attributes.foo.foreignKey === true);
       assert(obj.bar.attributes.foo.references === 'foo');
       assert(obj.bar.attributes.foo.on === 'id');
@@ -135,7 +135,8 @@ describe('ForeignKeys', function() {
     it('should add a foreign key mapping to the custom column name', function() {
       var obj = new ForeignKeys(collections);
       assert(obj.bar.attributes.foo);
-      assert(obj.bar.attributes.foo.columnName === 'foo_foo_uuid');
+
+      assert(obj.bar.attributes.foo.columnName === 'foo');
       assert(obj.bar.attributes.foo.foreignKey === true);
       assert(obj.bar.attributes.foo.references === 'foo');
       assert(obj.bar.attributes.foo.on === 'uuid');
