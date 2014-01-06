@@ -94,4 +94,28 @@ describe('Attributes', function() {
     });
   });
 
+  describe('with invalid attribute name', function() {
+    var collection;
+
+    before(function() {
+      collection = function() {};
+      collection.prototype = {
+        tableName: 'FOO',
+        attributes: {
+          foo: 'string',
+          'foo.bar': 'string'
+        }
+      };
+    });
+
+    it('should error with message', function() {
+      assert.throws(
+        function() {
+          new Attributes({ foo: collection });
+        }
+      );
+    });
+
+  });
+
 });
