@@ -47,7 +47,7 @@ describe('JoinTables', function() {
 
       assert(obj.bar_foo.attributes.foo);
       assert(obj.bar_foo.attributes.foo.type === 'integer');
-      assert(obj.bar_foo.attributes.foo.columnName === 'foo_id');
+      assert(obj.bar_foo.attributes.foo.columnName === 'foo');
       assert(obj.bar_foo.attributes.foo.foreignKey === true);
       assert(obj.bar_foo.attributes.foo.references === 'foo');
       assert(obj.bar_foo.attributes.foo.on === 'id');
@@ -55,7 +55,7 @@ describe('JoinTables', function() {
 
       assert(obj.bar_foo.attributes.bar);
       assert(obj.bar_foo.attributes.bar.type === 'integer');
-      assert(obj.bar_foo.attributes.bar.columnName === 'bar_id');
+      assert(obj.bar_foo.attributes.bar.columnName === 'bar');
       assert(obj.bar_foo.attributes.bar.foreignKey === true);
       assert(obj.bar_foo.attributes.bar.references === 'bar');
       assert(obj.bar_foo.attributes.bar.on === 'id');
@@ -66,10 +66,10 @@ describe('JoinTables', function() {
       var obj = new JoinTables(collections);
 
       assert(obj.foo.attributes.bars.references === 'bar_foo');
-      assert(obj.foo.attributes.bars.on === 'foo_id');
+      assert(obj.foo.attributes.bars.on === 'foo');
 
       assert(obj.bar.attributes.foos.references === 'bar_foo');
-      assert(obj.bar.attributes.foos.on === 'bar_id');
+      assert(obj.bar.attributes.foos.on === 'bar');
     });
   });
 
@@ -114,7 +114,7 @@ describe('JoinTables', function() {
 
       assert(obj.bar_foo.attributes.foo);
       assert(obj.bar_foo.attributes.foo.type === 'string');
-      assert(obj.bar_foo.attributes.foo.columnName === 'foo_uuid');
+      assert(obj.bar_foo.attributes.foo.columnName === 'foo');
       assert(obj.bar_foo.attributes.foo.foreignKey === true);
       assert(obj.bar_foo.attributes.foo.references === 'foo');
       assert(obj.bar_foo.attributes.foo.on === 'uuid');
@@ -122,7 +122,7 @@ describe('JoinTables', function() {
 
       assert(obj.bar_foo.attributes.bar);
       assert(obj.bar_foo.attributes.bar.type === 'integer');
-      assert(obj.bar_foo.attributes.bar.columnName === 'bar_area');
+      assert(obj.bar_foo.attributes.bar.columnName === 'bar');
       assert(obj.bar_foo.attributes.bar.foreignKey === true);
       assert(obj.bar_foo.attributes.bar.references === 'bar');
       assert(obj.bar_foo.attributes.bar.on === 'area');
