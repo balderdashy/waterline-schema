@@ -37,7 +37,7 @@ describe('Attributes', function() {
 
     it('should set defaults for adapters', function() {
       var obj = new Attributes({ foo: collection });
-      assert(obj.foo.adapter === '');
+      assert(obj.foo.connection === '');
     });
   });
 
