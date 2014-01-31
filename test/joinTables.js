@@ -17,7 +17,10 @@ describe('JoinTables', function() {
             primaryKey: true,
             unique: true
           },
-          bars: { collection: 'bar' }
+          bars: {
+            collection: 'bar',
+            via: 'foos'
+          }
         }
       };
 
@@ -30,7 +33,10 @@ describe('JoinTables', function() {
             primaryKey: true,
             unique: true
           },
-          foos: { collection: 'foo' }
+          foos: {
+            collection: 'foo',
+            via: 'bars'
+          }
         }
       };
     });
@@ -38,38 +44,38 @@ describe('JoinTables', function() {
     it('should add a junction table for a many to many relationship', function() {
       var obj = new JoinTables(collections);
 
-      assert(obj.bar_foo);
-      assert(obj.bar_foo.identity === 'bar_foo');
-      assert(obj.bar_foo.tables.indexOf('bar') > -1);
-      assert(obj.bar_foo.tables.indexOf('foo') > -1);
-      assert(obj.bar_foo.junctionTable === true);
+      assert(obj.foo_bars__bar_foos);
+      assert(obj.foo_bars__bar_foos.identity === 'foo_bars__bar_foos');
+      assert(obj.foo_bars__bar_foos.tables.indexOf('bar') > -1);
+      assert(obj.foo_bars__bar_foos.tables.indexOf('foo') > -1);
+      assert(obj.foo_bars__bar_foos.junctionTable === true);
 
 
-      assert(obj.bar_foo.attributes.foo);
-      assert(obj.bar_foo.attributes.foo.type === 'integer');
-      assert(obj.bar_foo.attributes.foo.columnName === 'foo');
-      assert(obj.bar_foo.attributes.foo.foreignKey === true);
-      assert(obj.bar_foo.attributes.foo.references === 'foo');
-      assert(obj.bar_foo.attributes.foo.on === 'id');
-      assert(obj.bar_foo.attributes.foo.groupKey === 'foo');
+      assert(obj.foo_bars__bar_foos.attributes.foo_bars);
+      assert(obj.foo_bars__bar_foos.attributes.foo_bars.type === 'integer');
+      assert(obj.foo_bars__bar_foos.attributes.foo_bars.columnName === 'foo_bars');
+      assert(obj.foo_bars__bar_foos.attributes.foo_bars.foreignKey === true);
+      assert(obj.foo_bars__bar_foos.attributes.foo_bars.references === 'foo');
+      assert(obj.foo_bars__bar_foos.attributes.foo_bars.on === 'id');
+      assert(obj.foo_bars__bar_foos.attributes.foo_bars.groupKey === 'foo');
 
-      assert(obj.bar_foo.attributes.bar);
-      assert(obj.bar_foo.attributes.bar.type === 'integer');
-      assert(obj.bar_foo.attributes.bar.columnName === 'bar');
-      assert(obj.bar_foo.attributes.bar.foreignKey === true);
-      assert(obj.bar_foo.attributes.bar.references === 'bar');
-      assert(obj.bar_foo.attributes.bar.on === 'id');
-      assert(obj.bar_foo.attributes.bar.groupKey === 'bar');
+      assert(obj.foo_bars__bar_foos.attributes.bar_foos);
+      assert(obj.foo_bars__bar_foos.attributes.bar_foos.type === 'integer');
+      assert(obj.foo_bars__bar_foos.attributes.bar_foos.columnName === 'bar_foos');
+      assert(obj.foo_bars__bar_foos.attributes.bar_foos.foreignKey === true);
+      assert(obj.foo_bars__bar_foos.attributes.bar_foos.references === 'bar');
+      assert(obj.foo_bars__bar_foos.attributes.bar_foos.on === 'id');
+      assert(obj.foo_bars__bar_foos.attributes.bar_foos.groupKey === 'bar');
     });
 
     it('should update the parent collection to point to the join table', function() {
       var obj = new JoinTables(collections);
 
-      assert(obj.foo.attributes.bars.references === 'bar_foo');
-      assert(obj.foo.attributes.bars.on === 'foo');
+      assert(obj.foo.attributes.bars.references === 'foo_bars__bar_foos');
+      assert(obj.foo.attributes.bars.on === 'foo_bars');
 
-      assert(obj.bar.attributes.foos.references === 'bar_foo');
-      assert(obj.bar.attributes.foos.on === 'bar');
+      assert(obj.bar.attributes.foos.references === 'foo_bars__bar_foos');
+      assert(obj.bar.attributes.foos.on === 'bar_foos');
     });
   });
 
@@ -86,7 +92,10 @@ describe('JoinTables', function() {
             type: 'string',
             primaryKey: true
           },
-          bars: { collection: 'bar' }
+          bars: {
+            collection: 'bar',
+            via: 'foos'
+          }
         }
       };
 
@@ -97,7 +106,10 @@ describe('JoinTables', function() {
             type: 'integer',
             primaryKey: true
           },
-          foos: { collection: 'foo' }
+          foos: {
+            collection: 'foo',
+            via: 'bars'
+          }
         }
       };
     });
@@ -105,28 +117,28 @@ describe('JoinTables', function() {
     it('should add a junction table for a many to many relationship', function() {
       var obj = new JoinTables(collections);
 
-      assert(obj.bar_foo);
-      assert(obj.bar_foo.identity === 'bar_foo');
-      assert(obj.bar_foo.tables.indexOf('bar') > -1);
-      assert(obj.bar_foo.tables.indexOf('foo') > -1);
-      assert(obj.bar_foo.junctionTable === true);
+      assert(obj.foo_bars__bar_foos);
+      assert(obj.foo_bars__bar_foos.identity === 'foo_bars__bar_foos');
+      assert(obj.foo_bars__bar_foos.tables.indexOf('bar') > -1);
+      assert(obj.foo_bars__bar_foos.tables.indexOf('foo') > -1);
+      assert(obj.foo_bars__bar_foos.junctionTable === true);
 
 
-      assert(obj.bar_foo.attributes.foo);
-      assert(obj.bar_foo.attributes.foo.type === 'string');
-      assert(obj.bar_foo.attributes.foo.columnName === 'foo');
-      assert(obj.bar_foo.attributes.foo.foreignKey === true);
-      assert(obj.bar_foo.attributes.foo.references === 'foo');
-      assert(obj.bar_foo.attributes.foo.on === 'uuid');
-      assert(obj.bar_foo.attributes.foo.groupKey === 'foo');
+      assert(obj.foo_bars__bar_foos.attributes.foo_bars);
+      assert(obj.foo_bars__bar_foos.attributes.foo_bars.type === 'string');
+      assert(obj.foo_bars__bar_foos.attributes.foo_bars.columnName === 'foo_bars');
+      assert(obj.foo_bars__bar_foos.attributes.foo_bars.foreignKey === true);
+      assert(obj.foo_bars__bar_foos.attributes.foo_bars.references === 'foo');
+      assert(obj.foo_bars__bar_foos.attributes.foo_bars.on === 'uuid');
+      assert(obj.foo_bars__bar_foos.attributes.foo_bars.groupKey === 'foo');
 
-      assert(obj.bar_foo.attributes.bar);
-      assert(obj.bar_foo.attributes.bar.type === 'integer');
-      assert(obj.bar_foo.attributes.bar.columnName === 'bar');
-      assert(obj.bar_foo.attributes.bar.foreignKey === true);
-      assert(obj.bar_foo.attributes.bar.references === 'bar');
-      assert(obj.bar_foo.attributes.bar.on === 'area');
-      assert(obj.bar_foo.attributes.bar.groupKey === 'bar');
+      assert(obj.foo_bars__bar_foos.attributes.bar_foos);
+      assert(obj.foo_bars__bar_foos.attributes.bar_foos.type === 'integer');
+      assert(obj.foo_bars__bar_foos.attributes.bar_foos.columnName === 'bar_foos');
+      assert(obj.foo_bars__bar_foos.attributes.bar_foos.foreignKey === true);
+      assert(obj.foo_bars__bar_foos.attributes.bar_foos.references === 'bar');
+      assert(obj.foo_bars__bar_foos.attributes.bar_foos.on === 'area');
+      assert(obj.foo_bars__bar_foos.attributes.bar_foos.groupKey === 'bar');
     });
   });
 
