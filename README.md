@@ -42,11 +42,14 @@ attributes: {
 Has many relationships are defined by adding a property to a collection's attributes with a
 `collection` property that points to another collection. This isn't used for the actual database
 structure in a relational system but could be helpful in a nosql database. It is also used
-internally inside of Waterline.
+internally inside of Waterline. A `via` key is required to point to a foriegn key.
 
 ```javascript
 attributes: {
-  users: { collection: 'user' }
+  users: {
+    collection: 'user',
+    via: 'foo'
+  }
 }
 ```
 
@@ -57,7 +60,8 @@ attributes: {
   users: {
     collection: 'user',
     references: 'user',
-    on: 'user_id'
+    on: 'user_id',
+    via: 'foo'
   }
 }
 ```
@@ -67,17 +71,24 @@ attributes: {
 Many To Many relationships are defined by adding a `collection` property on two Collections that
 point to each other. This will create an additional collection in the schema that maps out the
 relationship between the two. It will rewrite the foreign keys on the two collections to
-reference the new join collections.
+reference the new join collections. A `via` key is required on both so that the relationships can
+be properly mapped.
 
 ```javascript
 // Foo Collection
 attributes: {
-  bars: { collection: 'bar' }
+  bars: {
+    collection: 'bar',
+    via: 'foos'
+  }
 }
 
 // Bar Collection
 attributes: {
-  foos: { collection: 'foo' }
+  foos: {
+    collection: 'foo',
+    via: 'bars'
+  }
 }
 ```
 
@@ -93,9 +104,10 @@ attributes: {
     unique: true
   },
   bars: {
-    collection: 'bar_foo',
-    references: 'bar_foo',
-    on: 'foo_id'
+    collection: 'bar_foos__foo_bars',
+    references: 'bar_foos__foo_bars',
+    on: 'foo__bars',
+    via: 'bar_foos'
   }
 }
 
@@ -108,24 +120,25 @@ attributes: {
     unique: true
   },
   foos: {
-    collection: 'bar_foo',
-    references: 'bar_foo',
-    on: 'bar_id'
+    collection: 'bar_foos__foo_bars',
+    references: 'bar_foos__foo_bars',
+    on: 'bar_foos',
+    via: 'foo_bars'
   }
 }
 
-// Bar Foo Collection
+// bar_foos__foo_bars Collection
 attributes: {
-  bar: {
-    columnName: 'bar_id',
+  bar_foos: {
+    columnName: 'bar_foos',
     type: 'integer',
     foreignKey: true,
     references: 'bar',
     on: 'id',
     groupKey: 'bar'
   },
-  foo: {
-    columnName: 'foo_id',
+  foo_bars: {
+    columnName: 'foo_bars',
     type: 'integer',
     foreignKey: true,
     references: 'foo',
