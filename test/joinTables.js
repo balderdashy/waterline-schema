@@ -10,6 +10,7 @@ describe('JoinTables', function() {
 
       collections.foo = {
         tableName: 'foo',
+        connection: 'bar',
         attributes: {
           id: {
             type: 'integer',
@@ -19,13 +20,15 @@ describe('JoinTables', function() {
           },
           bars: {
             collection: 'bar',
-            via: 'foos'
+            via: 'foos',
+            dominant: true
           }
         }
       };
 
       collections.bar = {
         tableName: 'bar',
+        connection: 'bar',
         attributes: {
           id: {
             type: 'integer',
@@ -87,6 +90,7 @@ describe('JoinTables', function() {
 
       collections.foo = {
         tableName: 'foo',
+        connection: 'bar',
         attributes: {
           uuid: {
             type: 'string',
@@ -101,6 +105,7 @@ describe('JoinTables', function() {
 
       collections.bar = {
         tableName: 'bar',
+        connection: 'bar',
         attributes: {
           area: {
             type: 'integer',
@@ -108,7 +113,8 @@ describe('JoinTables', function() {
           },
           foos: {
             collection: 'foo',
-            via: 'bars'
+            via: 'bars',
+            dominant: true
           }
         }
       };
