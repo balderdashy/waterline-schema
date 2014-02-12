@@ -43,22 +43,27 @@ describe('Attributes', function() {
 
 
   describe('with automatic attribute flags not set', function() {
-    var collection;
+    var collectionFn;
 
     before(function() {
-      collection = function() {};
-      collection.prototype = {
-        tableName: 'FOO',
-        attributes: {
-          foo: 'string',
-          bar: 'string',
-          fn: function() {}
-        }
+      collectionFn = function() {
+        var collection = function() {};
+        collection.prototype = {
+          tableName: 'FOO',
+          attributes: {
+            foo: 'string',
+            bar: 'string',
+            fn: function() {}
+          }
+        };
+
+        return collection;
       };
     });
 
     it('should add auto attributes to the definition', function() {
-      var obj = new Attributes({ foo: collection });
+      var coll = collectionFn();
+      var obj = new Attributes({ foo: coll });
       assert(obj.foo);
       assert(Object.keys(obj.foo.attributes).length === 5);
       assert(obj.foo.attributes.foo);
@@ -69,26 +74,31 @@ describe('Attributes', function() {
     });
 
     it('should inject flags into the collection', function() {
-      var obj = new Attributes({ foo: collection });
-      assert(collection.prototype.autoPK);
-      assert(collection.prototype.autoCreatedAt);
-      assert(collection.prototype.autoUpdatedAt);
+      var coll = collectionFn();
+      var obj = new Attributes({ foo: coll });
+
+      assert(coll.prototype.autoPK);
+      assert(coll.prototype.autoCreatedAt);
+      assert(coll.prototype.autoUpdatedAt);
     });
 
     it('should normalize tableName to identity', function() {
-      var obj = new Attributes({ foo: collection });
-      assert(collection.prototype.identity === 'foo');
+      var coll = collectionFn();
+      var obj = new Attributes({ foo: coll });
+      assert(coll.prototype.identity === 'foo');
     });
 
     it('should add a primary key field', function() {
-      var obj = new Attributes({ foo: collection });
+      var coll = collectionFn();
+      var obj = new Attributes({ foo: coll });
       assert(obj.foo.attributes.id);
       assert(obj.foo.attributes.id.primaryKey);
       assert(obj.foo.attributes.id.unique);
     });
 
     it('should add in timestamps', function() {
-      var obj = new Attributes({ foo: collection });
+      var coll = collectionFn();
+      var obj = new Attributes({ foo: coll });
       assert(obj.foo.attributes.createdAt);
       assert(obj.foo.attributes.updatedAt);
     });
