@@ -1,7 +1,7 @@
 {
   "name": "waterline-schema",
   "description": "The core schema builder used in the Waterline ORM.",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "contributors": [
     {
       "name": "particlebanana",
