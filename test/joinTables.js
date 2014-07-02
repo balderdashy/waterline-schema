@@ -254,14 +254,14 @@ describe('JoinTables', function() {
       assert(!obj.bar_foos__foo_bars);
     });
 
-    it('should not update the parent collection to point to the join table', function() {
+    it('should still update the parent collection to point to the join table', function() {
       var obj = new JoinTables(collections);
 
-      assert(obj.foo.attributes.bars.references !== 'bar_foos__foo_bars');
-      assert(obj.foo.attributes.bars.on !== 'foo_bars');
+      assert(obj.foo.attributes.bars.references === 'bar_foos__foo_bars');
+      assert(obj.foo.attributes.bars.on === 'foo_bars');
 
-      assert(obj.bar.attributes.foos.references !== 'bar_foos__foo_bars');
-      assert(obj.bar.attributes.foos.on !== 'bar_foos');
+      assert(obj.bar.attributes.foos.references === 'bar_foos__foo_bars');
+      assert(obj.bar.attributes.foos.on === 'bar_foos');
     });
   });
 
@@ -313,14 +313,14 @@ describe('JoinTables', function() {
       assert(!obj.bar_foos__foo_bars);
     });
 
-    it('should not update the parent collection to point to the join table', function() {
+    it('should still update the parent collection to point to the join table', function() {
       var obj = new JoinTables(collections);
 
-      assert(obj.foo.attributes.bars.references !== 'bar_foos__foo_bars');
-      assert(obj.foo.attributes.bars.on !== 'foo_bars');
+      assert(obj.foo.attributes.bars.references === 'bar_foos__foo_bars');
+      assert(obj.foo.attributes.bars.on === 'foo_bars');
 
-      assert(obj.bar.attributes.foos.references !== 'bar_foos__foo_bars');
-      assert(obj.bar.attributes.foos.on !== 'bar_foos');
+      assert(obj.bar.attributes.foos.references === 'bar_foos__foo_bars');
+      assert(obj.bar.attributes.foos.on === 'bar_foos');
     });
   });
 
