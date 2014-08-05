@@ -22,7 +22,7 @@ describe('Attributes', function() {
     });
 
     it('should build an attributes definition containing two keys', function() {
-      var obj = new Attributes({ foo: collection });
+      var obj = new Attributes([collection]);
 
       assert(obj.foo);
       assert(Object.keys(obj.foo.attributes).length === 2);
@@ -31,12 +31,12 @@ describe('Attributes', function() {
     });
 
     it('should strip functions', function() {
-      var obj = new Attributes({ foo: collection });
+      var obj = new Attributes([collection]);
       assert(!obj.foo.attributes.fn);
     });
 
     it('should set defaults for adapters', function() {
-      var obj = new Attributes({ foo: collection });
+      var obj = new Attributes([collection]);
       assert(obj.foo.connection === '');
     });
   });
@@ -63,7 +63,7 @@ describe('Attributes', function() {
 
     it('should add auto attributes to the definition', function() {
       var coll = collectionFn();
-      var obj = new Attributes({ foo: coll });
+      var obj = new Attributes([coll]);
       assert(obj.foo);
       assert(Object.keys(obj.foo.attributes).length === 5);
       assert(obj.foo.attributes.foo);
@@ -75,7 +75,7 @@ describe('Attributes', function() {
 
     it('should inject flags into the collection', function() {
       var coll = collectionFn();
-      var obj = new Attributes({ foo: coll });
+      var obj = new Attributes([coll]);
 
       assert(coll.prototype.autoPK);
       assert(coll.prototype.autoCreatedAt);
@@ -84,13 +84,13 @@ describe('Attributes', function() {
 
     it('should normalize tableName to identity', function() {
       var coll = collectionFn();
-      var obj = new Attributes({ foo: coll });
+      var obj = new Attributes([coll]);
       assert(coll.prototype.identity === 'foo');
     });
 
     it('should add a primary key field', function() {
       var coll = collectionFn();
-      var obj = new Attributes({ foo: coll });
+      var obj = new Attributes([coll]);
       assert(obj.foo.attributes.id);
       assert(obj.foo.attributes.id.primaryKey);
       assert(obj.foo.attributes.id.unique);
@@ -98,7 +98,7 @@ describe('Attributes', function() {
 
     it('should add in timestamps', function() {
       var coll = collectionFn();
-      var obj = new Attributes({ foo: coll });
+      var obj = new Attributes([coll]);
       assert(obj.foo.attributes.createdAt);
       assert(obj.foo.attributes.updatedAt);
     });
@@ -121,7 +121,7 @@ describe('Attributes', function() {
     it('should error with message', function() {
       assert.throws(
         function() {
-          new Attributes({ foo: collection });
+          new Attributes([collection]);
         }
       );
     });
