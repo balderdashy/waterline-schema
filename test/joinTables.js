@@ -206,7 +206,7 @@ describe('JoinTables', function() {
     });
   });
 
-  describe('migrate safe should not build up a join table', function() {
+  describe('migrate safe should not flag a join table as "alter"', function() {
     var collections = {};
 
     before(function() {
@@ -251,7 +251,7 @@ describe('JoinTables', function() {
 
     it('should not add a junction table for a many to many relationship', function() {
       var obj = new JoinTables(collections);
-      assert(!obj.bar_foos__foo_bars);
+      assert(obj.bar_foos__foo_bars.migrate === 'safe');
     });
 
     it('should still update the parent collection to point to the join table', function() {
@@ -265,7 +265,7 @@ describe('JoinTables', function() {
     });
   });
 
-  describe('migrate safe should not build up a join table when specified on only one collection', function() {
+  describe('migrate safe should not flag a join table as "alter" when specified on only one collection', function() {
     var collections = {};
 
     before(function() {
@@ -308,9 +308,9 @@ describe('JoinTables', function() {
       };
     });
 
-    it('should not add a junction table for a many to many relationship', function() {
+    it('should set the junction table\'s migrate setting to "safe" in the many to many relationship', function() {
       var obj = new JoinTables(collections);
-      assert(!obj.bar_foos__foo_bars);
+      assert(obj.bar_foos__foo_bars.migrate === 'safe');
     });
 
     it('should still update the parent collection to point to the join table', function() {
