@@ -206,4 +206,122 @@ describe('JoinTables', function() {
     });
   });
 
+  describe('migrate safe should not build up a join table', function() {
+    var collections = {};
+
+    before(function() {
+
+      collections.foo = {
+        tableName: 'foo',
+        connection: 'bar',
+        migrate: 'safe',
+        attributes: {
+          id: {
+            type: 'integer',
+            autoIncrement: true,
+            primaryKey: true,
+            unique: true
+          },
+          bars: {
+            collection: 'bar',
+            via: 'foos',
+            dominant: true
+          }
+        }
+      };
+
+      collections.bar = {
+        tableName: 'bar',
+        connection: 'bar',
+        migrate: 'safe',
+        attributes: {
+          id: {
+            type: 'integer',
+            autoIncrement: true,
+            primaryKey: true,
+            unique: true
+          },
+          foos: {
+            collection: 'foo',
+            via: 'bars'
+          }
+        }
+      };
+    });
+
+    it('should not add a junction table for a many to many relationship', function() {
+      var obj = new JoinTables(collections);
+      assert(!obj.bar_foos__foo_bars);
+    });
+
+    it('should still update the parent collection to point to the join table', function() {
+      var obj = new JoinTables(collections);
+
+      assert(obj.foo.attributes.bars.references === 'bar_foos__foo_bars');
+      assert(obj.foo.attributes.bars.on === 'foo_bars');
+
+      assert(obj.bar.attributes.foos.references === 'bar_foos__foo_bars');
+      assert(obj.bar.attributes.foos.on === 'bar_foos');
+    });
+  });
+
+  describe('migrate safe should not build up a join table when specified on only one collection', function() {
+    var collections = {};
+
+    before(function() {
+
+      collections.foo = {
+        tableName: 'foo',
+        connection: 'bar',
+        migrate: 'alter',
+        attributes: {
+          id: {
+            type: 'integer',
+            autoIncrement: true,
+            primaryKey: true,
+            unique: true
+          },
+          bars: {
+            collection: 'bar',
+            via: 'foos',
+            dominant: true
+          }
+        }
+      };
+
+      collections.bar = {
+        tableName: 'bar',
+        connection: 'bar',
+        migrate: 'safe',
+        attributes: {
+          id: {
+            type: 'integer',
+            autoIncrement: true,
+            primaryKey: true,
+            unique: true
+          },
+          foos: {
+            collection: 'foo',
+            via: 'bars'
+          }
+        }
+      };
+    });
+
+    it('should not add a junction table for a many to many relationship', function() {
+      var obj = new JoinTables(collections);
+      assert(!obj.bar_foos__foo_bars);
+    });
+
+    it('should still update the parent collection to point to the join table', function() {
+      var obj = new JoinTables(collections);
+
+      assert(obj.foo.attributes.bars.references === 'bar_foos__foo_bars');
+      assert(obj.foo.attributes.bars.on === 'foo_bars');
+
+      assert(obj.bar.attributes.foos.references === 'bar_foos__foo_bars');
+      assert(obj.bar.attributes.foos.on === 'bar_foos');
+    });
+  });
+
 });
