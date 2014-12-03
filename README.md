@@ -147,3 +147,9 @@ attributes: {
   }
 }
 ```
+
+
+## Contributing
+
+Before submitting a pull request, please make sure the `waterline-schema` tests pass, as well as [the tests](https://github.com/balderdashy/waterline#tests) in `waterline` core (use `npm link`)
+
