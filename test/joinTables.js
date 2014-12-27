@@ -187,18 +187,15 @@ describe('JoinTables', function() {
 
     it('should throw an exception message', function() {
 
-      var error = false;
-
-      try {
+      function test()
+      {
         new JoinTables(collections);
-      } catch(err) {
-          error = err;
       }
 
-      assert(error !== false);
-
+      assert.throws(test, Error);
     });
   });
+
 
   describe('self-referencing associations', function() {
     var collections = {};
