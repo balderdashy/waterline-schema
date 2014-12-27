@@ -187,11 +187,15 @@ describe('JoinTables', function() {
 
     it('should throw an exception message', function() {
 
+      var error = false;
+
       try {
-        new JoinTables(collections)
-      } catch(error) {
-        assert(error === 'on mapping custom foreign keys: bar->foo. Attribute: `fake` does not exist on: collection: `foo`');
+        new JoinTables(collections);
+      } catch(err) {
+          error = err;
       }
+
+      assert(error !== false);
 
     });
   });
