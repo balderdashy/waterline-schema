@@ -192,7 +192,7 @@ describe('JoinTables', function() {
         new JoinTables(collections);
       }
 
-      assert.throws(test, Error);
+      assert.throws(test, /(on mapping custom foreign keys)/);
     });
   });
 
