@@ -1,5 +1,8 @@
 Waterline Schema
 ====================
+[![Build Status](https://travis-ci.org/balderdashy/waterline-schema.svg?branch=master)](https://travis-ci.org/balderdashy/waterline-schema)
+[![npm version](https://badge.fury.io/js/waterline-schema.svg)](http://badge.fury.io/js/waterline-schema)
+[![Dependency Status](https://david-dm.org/balderdashy/waterline-schema.svg)](https://david-dm.org/balderdashy/waterline-schema)
 
 This is the core schema builder used in the Waterline ORM. It is responsible for taking an
 attributes object from a Collection and turning it into a fully fledged schema object.
