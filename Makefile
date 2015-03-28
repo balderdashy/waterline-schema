@@ -9,7 +9,7 @@ test-integration:
 	mkdir test_integration
 	cd test_integration; \
 		wget https://github.com/balderdashy/waterline/archive/master.zip; \
-		unzip master.zip
+		unzip -q master.zip
 	cd test_integration/waterline-master; \
 		npm link waterline-schema; \
 		npm install; \
