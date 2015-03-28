@@ -27,7 +27,7 @@
   "homepage": "http://github.com/balderdashy/waterline-schema",
   "main": "lib/waterline-schema.js",
   "scripts": {
-    "test": "mocha test"
+    "test": "make test"
   },
   "engines": {
     "node": "*"
