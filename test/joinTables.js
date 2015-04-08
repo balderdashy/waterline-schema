@@ -148,6 +148,55 @@ describe('JoinTables', function() {
   });
 
 
+  describe('mapping of custom foreign keys with the wrong `via` value', function() {
+    var collections = {};
+
+    before(function() {
+
+      collections.foo = {
+        tableName: 'foo',
+        connection: 'bar',
+        attributes: {
+          uuid: {
+            type: 'string',
+            primaryKey: true
+          },
+          bars: {
+            collection: 'bar',
+            via: 'foos'
+          }
+        }
+      };
+
+      collections.bar = {
+        tableName: 'bar',
+        connection: 'bar',
+        attributes: {
+          area: {
+            type: 'integer',
+            primaryKey: true
+          },
+          foos: {
+            collection: 'foo',
+            via: 'fake',
+            dominant: true
+          }
+        }
+      };
+    });
+
+    it('should throw an exception message', function() {
+
+      function test()
+      {
+        new JoinTables(collections);
+      }
+
+      assert.throws(test, /(on mapping custom foreign keys)/);
+    });
+  });
+
+
   describe('self-referencing associations', function() {
     var collections = {};
 
