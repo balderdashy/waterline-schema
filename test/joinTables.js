@@ -373,4 +373,67 @@ describe('JoinTables', function() {
     });
   });
 
+
+  describe('junction table between the same model', function() {
+    var collections = {};
+
+    before(function() {
+
+      collections.foo = {
+        tableName: 'foo',
+        connection: 'foo',
+        migrate: 'safe',
+        attributes: {
+          id: {
+            type: 'integer',
+            autoIncrement: true,
+            primaryKey: true,
+            unique: true
+          }
+        },
+        follows: {
+          collection: 'foo',
+          through: 'bar',
+          via: 'from'
+        },
+        followers: {
+          collection: 'foo',
+          through: 'bar',
+          via: 'from'
+        }
+      };
+
+      collections.bar = {
+        tableName: 'bar',
+        connection: 'bar',
+        migrate: 'safe',
+        attributes: {
+          to: {
+            foreignKey: true,
+            references: 'foo',
+            on: 'id',
+            onKey: 'id',
+            via: 'from'
+          },
+          from: {
+            foreignKey: true,
+            references: 'foo',
+            on: 'id',
+            onKey: 'id',
+            via: 'to'
+          }
+        }
+      }
+    });
+
+    it('should join to collect attributes', function() {
+      var obj = new JoinTables(collections);
+
+      assert(obj.foo.follows.onKey !== 'from');
+      assert(obj.foo.follows.on !== 'from');
+
+      assert(obj.foo.followers.onKey !== 'to');
+      assert(obj.foo.followers.on !== 'to');
+    });
+  });
 });
