@@ -407,6 +407,10 @@ describe('JoinTables', function() {
         tableName: 'bar',
         connection: 'bar',
         migrate: 'safe',
+
+        junctionTable: true,
+        tables: ['foo', 'foo'],
+
         attributes: {
           to: {
             foreignKey: true,
