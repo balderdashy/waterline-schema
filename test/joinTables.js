@@ -389,17 +389,17 @@ describe('JoinTables', function() {
             autoIncrement: true,
             primaryKey: true,
             unique: true
+          },
+          follows: {
+            collection: 'foo',
+            through: 'bar',
+            via: 'to'
+          },
+          followers: {
+            collection: 'foo',
+            through: 'bar',
+            via: 'from'
           }
-        },
-        follows: {
-          collection: 'foo',
-          through: 'bar',
-          via: 'from'
-        },
-        followers: {
-          collection: 'foo',
-          through: 'bar',
-          via: 'from'
         }
       };
 
@@ -433,11 +433,11 @@ describe('JoinTables', function() {
     it('should join to collect attributes', function() {
       var obj = new JoinTables(collections);
 
-      assert(obj.foo.follows.onKey !== 'from');
-      assert(obj.foo.follows.on !== 'from');
+      assert.equal(obj.foo.attributes.follows.onKey, 'to');
+      assert.equal(obj.foo.attributes.follows.on, 'to');
 
-      assert(obj.foo.followers.onKey !== 'to');
-      assert(obj.foo.followers.on !== 'to');
+      assert.equal(obj.foo.attributes.followers.onKey, 'from');
+      assert.equal(obj.foo.attributes.followers.on, 'from');
     });
   });
 });
