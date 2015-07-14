@@ -104,6 +104,56 @@ describe('Attributes', function() {
     });
   });
 
+  describe('with custom automatic attribute names', function() {
+    var collectionFn;
+
+    before(function() {
+      collectionFn = function() {
+        var collection = function() {};
+        collection.prototype = {
+          tableName: 'FOO',
+          autoCreatedAt: 'customCreatedAt',
+          autoUpdatedAt: 'customUpdatedAt',
+          attributes: {
+            foo: 'string',
+            bar: 'string',
+            fn: function() {}
+          }
+        };
+
+        return collection;
+      };
+    });
+
+    it('should add auto attributes to the definition', function() {
+      var coll = collectionFn();
+      var obj = new Attributes([coll]);
+      assert(obj.foo);
+      assert(Object.keys(obj.foo.attributes).length === 5);
+      assert(obj.foo.attributes.foo);
+      assert(obj.foo.attributes.bar);
+      assert(obj.foo.attributes.id);
+      assert(obj.foo.attributes.customCreatedAt);
+      assert(obj.foo.attributes.customUpdatedAt);
+    });
+
+    it('should inject the custom names into the collection', function() {
+      var coll = collectionFn();
+      var obj = new Attributes([coll]);
+
+      assert(coll.prototype.autoPK);
+      assert(coll.prototype.autoCreatedAt);
+      assert(coll.prototype.autoUpdatedAt);
+    });
+
+    it('should add in timestamps', function() {
+      var coll = collectionFn();
+      var obj = new Attributes([coll]);
+      assert(obj.foo.attributes.customCreatedAt);
+      assert(obj.foo.attributes.customUpdatedAt);
+    });
+  });
+
   describe('with invalid attribute name', function() {
     var collection;
 
