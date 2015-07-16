@@ -74,7 +74,7 @@ describe('Attributes', function() {
       };
     });
 
-    it('should not add not reserved attribute names to the definition', function() {
+    it('should not add non-reserved attribute names to the definition', function() {
       var coll = collectionFn();
       var obj = new Attributes([coll]);
 
