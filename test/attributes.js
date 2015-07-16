@@ -33,11 +33,6 @@ describe('Attributes', function() {
       assert(!obj.foo.attributes.bar);
     });
 
-    it('should strip hole object', function() {
-      var obj = new Attributes([collection]);
-      assert(!obj.foo.attributes.myObj);
-    });
-
     it('should strip a property of object with reserved name', function() {
       var obj = new Attributes([collection]);
       assert(obj.foo.attributes.groupKey);
