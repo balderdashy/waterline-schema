@@ -16,18 +16,32 @@ describe('Attributes', function() {
         attributes: {
           foo: 'string',
           bar: 'string',
-          fn: function() {}
+          fn: function() {},
+          myObj: {
+            test: true
+          },
+          groupKey: {
+            test: "yes"
+          }
         }
       };
     });
 
-    it('should build an attributes definition containing two keys', function() {
+    it('should strip strings', function() {
       var obj = new Attributes([collection]);
+      assert(!obj.foo.attributes.foo);
+      assert(!obj.foo.attributes.bar);
+    });
 
-      assert(obj.foo);
-      assert(Object.keys(obj.foo.attributes).length === 2);
-      assert(obj.foo.attributes.foo);
-      assert(obj.foo.attributes.bar);
+    it('should strip hole object', function() {
+      var obj = new Attributes([collection]);
+      assert(!obj.foo.attributes.myObj);
+    });
+
+    it('should strip a property of object with reserved name', function() {
+      var obj = new Attributes([collection]);
+      assert(obj.foo.attributes.groupKey);
+      assert(!obj.foo.attributes.groupKey.test);
     });
 
     it('should strip functions', function() {
@@ -40,7 +54,6 @@ describe('Attributes', function() {
       assert(obj.foo.connection === '');
     });
   });
-
 
   describe('with automatic attribute flags not set', function() {
     var collectionFn;
@@ -61,13 +74,14 @@ describe('Attributes', function() {
       };
     });
 
-    it('should add auto attributes to the definition', function() {
+    it('should not add not reserved attribute names to the definition', function() {
       var coll = collectionFn();
       var obj = new Attributes([coll]);
+
       assert(obj.foo);
-      assert(Object.keys(obj.foo.attributes).length === 5);
-      assert(obj.foo.attributes.foo);
-      assert(obj.foo.attributes.bar);
+      assert(Object.keys(obj.foo.attributes).length === 3);
+      assert(!obj.foo.attributes.foo);
+      assert(!obj.foo.attributes.bar);
       assert(obj.foo.attributes.id);
       assert(obj.foo.attributes.createdAt);
       assert(obj.foo.attributes.updatedAt);
