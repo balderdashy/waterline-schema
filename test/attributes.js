@@ -139,16 +139,15 @@ describe('Attributes', function() {
       };
     });
 
-    it('should add auto attributes to the definition', function() {
+    it('should add auto attributes into the collection', function() {
       var coll = collectionFn();
       var obj = new Attributes([coll]);
-      assert(obj.foo);
-      assert(Object.keys(obj.foo.attributes).length === 5);
-      assert(obj.foo.attributes.foo);
-      assert(obj.foo.attributes.bar);
-      assert(obj.foo.attributes.id);
-      assert(obj.foo.attributes.customCreatedAt);
-      assert(obj.foo.attributes.customUpdatedAt);
+      assert(Object.keys(coll.prototype.attributes).length === 6);
+      assert(coll.prototype.attributes.foo);
+      assert(coll.prototype.attributes.bar);
+      assert(coll.prototype.attributes.id);
+      assert(coll.prototype.attributes.customCreatedAt);
+      assert(coll.prototype.attributes.customUpdatedAt);
     });
 
     it('should inject the custom names into the collection', function() {
@@ -163,8 +162,8 @@ describe('Attributes', function() {
     it('should add in timestamps', function() {
       var coll = collectionFn();
       var obj = new Attributes([coll]);
-      assert(obj.foo.attributes.customCreatedAt);
-      assert(obj.foo.attributes.customUpdatedAt);
+      assert(coll.prototype.attributes.customCreatedAt);
+      assert(coll.prototype.attributes.customUpdatedAt);
     });
   });
 
