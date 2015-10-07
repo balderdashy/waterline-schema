@@ -1,7 +1,7 @@
 {
   "name": "waterline-schema",
   "description": "The core schema builder used in the Waterline ORM.",
-  "version": "0.1.18",
+  "version": "0.1.18-postman.1",
   "contributors": [
     {
       "name": "particlebanana",
@@ -27,7 +27,8 @@
   "homepage": "http://github.com/balderdashy/waterline-schema",
   "main": "lib/waterline-schema.js",
   "scripts": {
-    "test": "make test"
+    "test": "make test",
+    "test-unit": "make test-unit"
   },
   "engines": {
     "node": "*"

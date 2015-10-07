@@ -13,6 +13,7 @@ describe('Attributes', function() {
         autoPK: false,
         autoCreatedAt: false,
         autoUpdatedAt: false,
+        autoTK: false,
         attributes: {
           foo: 'string',
           bar: 'string',
@@ -65,12 +66,13 @@ describe('Attributes', function() {
       var coll = collectionFn();
       var obj = new Attributes([coll]);
       assert(obj.foo);
-      assert(Object.keys(obj.foo.attributes).length === 5);
+      assert(Object.keys(obj.foo.attributes).length === 6);
       assert(obj.foo.attributes.foo);
       assert(obj.foo.attributes.bar);
       assert(obj.foo.attributes.id);
       assert(obj.foo.attributes.createdAt);
       assert(obj.foo.attributes.updatedAt);
+      assert(obj.foo.attributes.transactionId);
     });
 
     it('should inject flags into the collection', function() {
