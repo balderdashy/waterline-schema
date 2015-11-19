@@ -38,4 +38,4 @@ reasonable tests that prove it, and it doesn't break other core functionality.
 
  Feature                                         | Owner                                              | Details
  :---------------------------------------------- | :------------------------------------------------- | :------
-
+ Support custom Join Table names                 | [@devinivy](https://github.com/devinivy)           | Allow the name of the generated join table to be customized. See [#20](https://github.com/balderdashy/waterline-schema/issues/20)
