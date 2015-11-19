@@ -25,9 +25,9 @@ Our short-to-medium-term roadmap items, in order of descending priority:
 _(feel free to suggest things)_
 
 
- Feature                                                  | Owner                                                                            | Details
- :------------------------------------------------------- | :------------------------------------------------------------------------------- | :------
-
+ Feature                                                  | Owner                                              | Details
+ :------------------------------------------------------- | :------------------------------------------------- | :------
+ Ability to specify embedded associations                 | [@clarkorz](https://github.com/clarkorz)           | Supports denormalization. See [#8](https://github.com/balderdashy/waterline-schema/pull/8)
 
 
 #### Backlog
