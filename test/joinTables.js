@@ -255,6 +255,7 @@ describe('JoinTables', function() {
     });
   });
 
+
   describe('migrate safe should not flag a join table as "alter"', function() {
     var collections = {};
 
@@ -313,6 +314,7 @@ describe('JoinTables', function() {
       assert(obj.bar.attributes.foos.on === 'bar_foos');
     });
   });
+
 
   describe('migrate safe should not flag a join table as "alter" when specified on only one collection', function() {
     var collections = {};
