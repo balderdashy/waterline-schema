@@ -18,11 +18,11 @@ describe('Has Many Through', function() {
       });
     });
 
-    it('should flag the "through" table as both a junction table and through table', function() {
+    it('should flag the "through" table and not mark it as a junction table', function() {
       var schema = new Schema(collections);
       var junctionTable = schema.drive;
 
-      assert(junctionTable.junctionTable);
+      assert(!junctionTable.junctionTable);
       assert(junctionTable.throughTable);
     });
   });
