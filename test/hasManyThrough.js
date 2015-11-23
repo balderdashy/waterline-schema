@@ -1,9 +1,33 @@
-var References = require('../lib/waterline-schema/references'),
-    assert = require('assert');
+var assert = require('assert');
+var _ = require('lodash');
+
+var Schema = require('../lib/waterline-schema');
+var References = require('../lib/waterline-schema/references');
+var fixtures = require('./fixtures/many-many-through');
 
 describe('Has Many Through', function() {
 
-  describe('Should Add', function() {
+  describe('junction table config', function() {
+    var collections = [];
+
+    before(function() {
+      _.each(fixtures, function(fixture) {
+        var coll = function() {};
+        coll.prototype = fixture;
+        collections.push(coll);
+      });
+    });
+
+    it('should flag the "through" table and not mark it as a junction table', function() {
+      var schema = new Schema(collections);
+      var junctionTable = schema.drive;
+
+      assert(!junctionTable.junctionTable);
+      assert(junctionTable.throughTable);
+    });
+  });
+
+  describe('reference mapping', function() {
     var collections = {};
 
     before(function() {
