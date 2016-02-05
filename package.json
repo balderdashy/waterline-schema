@@ -9,10 +9,10 @@
     }
   ],
   "dependencies": {
-    "lodash": "~3.10.0"
+    "lodash": "3.10.1"
   },
   "devDependencies": {
-    "mocha": "1.9.x"
+    "mocha": "2.4.5"
   },
   "keywords": [
     "mvc",
