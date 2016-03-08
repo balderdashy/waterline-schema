@@ -3,6 +3,68 @@ var JoinTables = require('../lib/waterline-schema/joinTables'),
 
 describe('JoinTables', function() {
 
+  describe('ignore attributes with primaryKey set to false', function() {
+    var collections = {};
+
+    before(function() {
+
+      collections.foo = {
+        tableName: 'foo',
+        connection: 'bar',
+        attributes: {
+          id: {
+            type: 'integer',
+            autoIncrement: true,
+            primaryKey: true,
+            unique: true
+          },
+          count: {
+            type: 'integer',
+            primaryKey: false
+          },
+          bars: {
+            collection: 'bar',
+            via: 'foos',
+            dominant: true
+          }
+        }
+      };
+
+      collections.bar = {
+        tableName: 'bar',
+        connection: 'bar',
+        attributes: {
+          id: {
+            type: 'integer',
+            autoIncrement: true,
+            primaryKey: true,
+            unique: true
+          },
+          size: {
+            type: 'integer',
+            primaryKey: false
+          },
+          foos: {
+            collection: 'foo',
+            via: 'bars'
+          }
+        }
+      };
+    });
+
+    it('should only use columns with primaryKey set to true for the junction table', function() {
+      var obj = new JoinTables(collections);
+      assert(obj.bar_foos__foo_bars);
+      assert(obj.bar_foos__foo_bars.attributes);
+
+      assert(obj.bar_foos__foo_bars.attributes.foo_bars);
+      assert(obj.bar_foos__foo_bars.attributes.foo_bars.on === 'id');
+
+      assert(obj.bar_foos__foo_bars.attributes.bar_foos);
+      assert(obj.bar_foos__foo_bars.attributes.bar_foos.on === 'id');
+    });
+  });
+
   describe('auto mapping of foreign keys', function() {
     var collections = {};
 
