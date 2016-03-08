@@ -3,6 +3,39 @@ var ForeignKeys = require('../lib/waterline-schema/foreignKeys'),
 
 describe('ForeignKeys', function() {
 
+  describe('ignore attributes with primaryKey set to false', function() {
+    var collections = {};
+
+    before(function() {
+      collections.foo = {
+        attributes: {
+          id: {
+            type: 'integer',
+            autoIncrement: true,
+            primaryKey: true,
+            unique: true
+          },
+          count: {
+            type: 'integer',
+            primaryKey: false
+          }
+        }
+      };
+
+      collections.bar = {
+        attributes: {
+          foo: { model: 'foo' }
+        }
+      };
+    });
+
+    it('should only use the column with primaryKey set to true as foreignKey', function() {
+      var obj = new ForeignKeys(collections);
+      assert(obj.bar.attributes.foo);
+      assert(obj.bar.attributes.foo.on === 'id');
+    });
+  });
+
   describe('with automatic column names', function() {
     var collections = {};
 
