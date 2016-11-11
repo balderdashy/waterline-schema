@@ -1,5 +1,5 @@
-var SchemaBuilder = require('../lib/waterline-schema/schema');
 var assert = require('assert');
+var SchemaBuilder = require('../lib/waterline-schema/schema');
 
 describe('Schema Builder :: ', function() {
 
@@ -7,9 +7,9 @@ describe('Schema Builder :: ', function() {
     it('should throw an error when a collection is missing an identity', function() {
       var collection = function() {};
       collection.prototype = {
+        primaryKey: 'id',
         attributes: {
           id: {
-            primaryKey: true,
             type: 'number'
           }
         }
@@ -26,9 +26,9 @@ describe('Schema Builder :: ', function() {
       var collection = function() {};
       collection.prototype = {
         identity: 'FOO',
+        primaryKey: 'id',
         attributes: {
           id: {
-            primaryKey: true,
             type: 'number'
           }
         }
@@ -45,9 +45,9 @@ describe('Schema Builder :: ', function() {
       var collection = function() {};
       collection.prototype = {
         tableName: 'foo',
+        primaryKey: 'id',
         attributes: {
           id: {
-            primaryKey: true,
             type: 'number'
           }
         }
@@ -96,36 +96,13 @@ describe('Schema Builder :: ', function() {
       );
     });
 
-    it('should allow the primary key to be set as a flag on an attribute', function() {
+    it('should NOT allow the primary key to be set as a flag on an attribute', function() {
       var collection = function() {};
       collection.prototype = {
         identity: 'foo',
         attributes: {
           bar: {
             type: 'string'
-          },
-          baz: {
-            type: 'number',
-            primaryKey: true
-          }
-        }
-      };
-
-      assert.doesNotThrow(
-        function() {
-          SchemaBuilder([collection]);
-        }
-      );
-    });
-
-    it('should enforce a single primary key attribute', function() {
-      var collection = function() {};
-      collection.prototype = {
-        identity: 'foo',
-        attributes: {
-          bar: {
-            type: 'string',
-            primaryKey: true
           },
           baz: {
             type: 'number',
@@ -201,6 +178,25 @@ describe('Schema Builder :: ', function() {
       };
 
       assert.doesNotThrow(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should validate types', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'integer'
+          }
+        }
+      };
+
+      assert.throws(
         function() {
           SchemaBuilder([collection]);
         }
