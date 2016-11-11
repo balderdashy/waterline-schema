@@ -1,93 +1,144 @@
 var assert = require('assert');
-var _ = require('lodash');
+var _ = require('@sailshq/lodash');
+var SchemaBuilder = require('../lib/waterline-schema');
 
-var Schema = require('../lib/waterline-schema');
-var References = require('../lib/waterline-schema/references');
-var fixtures = require('./fixtures/many-many-through');
-
-describe('Has Many Through', function() {
-
-  describe('junction table config', function() {
-    var collections = [];
+describe('Has Many Through :: ', function() {
+  describe('Junction Tables', function() {
+    var schema;
 
     before(function() {
-      _.each(fixtures, function(fixture) {
-        var coll = function() {};
-        coll.prototype = fixture;
-        collections.push(coll);
+      var fixtures = [
+        {
+          identity: 'user',
+          primaryKey: 'id',
+          attributes: {
+            id: {
+              type: 'number'
+            },
+            cars: {
+              collection: 'car',
+              through: 'drive',
+              via: 'user'
+            }
+          }
+        },
+
+        {
+          identity: 'drive',
+          primaryKey: 'id',
+          attributes: {
+            id: {
+              type: 'number'
+            },
+            car: {
+              model: 'car'
+            },
+            user: {
+              model: 'user'
+            }
+          }
+        },
+
+        {
+          identity: 'car',
+          primaryKey: 'id',
+          attributes: {
+            id: {
+              type: 'number'
+            },
+            drivers: {
+              collection: 'user',
+              through: 'drive',
+              via: 'car'
+            }
+          }
+        }
+      ];
+
+
+      var collections = _.map(fixtures, function(obj) {
+        var collection = function() {};
+        collection.prototype = obj;
+        return collection;
       });
+
+      // Build the schema
+      schema = SchemaBuilder(collections);
     });
 
     it('should flag the "through" table and not mark it as a junction table', function() {
-      var schema = new Schema(collections);
-      var junctionTable = schema.drive;
-
-      assert(!junctionTable.junctionTable);
-      assert(junctionTable.throughTable);
+      assert(schema.drive);
+      assert(!schema.drive.junctionTable);
+      assert(schema.drive.throughTable);
     });
   });
 
-  describe('reference mapping', function() {
-    var collections = {};
+  describe('Reference Mapping', function() {
+    var schema;
 
     before(function() {
+      var fixtures = [
+        {
+          identity: 'foo',
+          primaryKey: 'id',
+          attributes: {
+            id: {
+              type: 'number'
+            },
+            bars: {
+              collection: 'bar',
+              through: 'foobar',
+              via: 'foo'
+            }
+          }
+        },
 
-      collections.foo = {
-        tableName: 'foo',
-        attributes: {
-          id: {
-            type: 'integer',
-            autoIncrement: true,
-            primaryKey: true,
-            unique: true
-          },
-          bars: {
-            collection: 'bar' ,
-            through: 'foobar'
+        {
+          identity: 'foobar',
+          primaryKey: 'id',
+          attributes: {
+            id: {
+              type: 'number'
+            },
+            type: {
+              type: 'string'
+            },
+            foo: {
+              model: 'foo',
+              columnName: 'foo_id'
+            },
+            bar: {
+              model: 'bar',
+              columnName: 'bar_id'
+            }
+          }
+        },
+
+        {
+          identity: 'bar',
+          primaryKey: 'id',
+          attributes: {
+            id: {
+              type: 'number'
+            }
           }
         }
-      };
+      ];
 
-      collections.foobar = {
-        tableName: 'foobar',
-        attributes: {
-          id: {
-            type: 'integer',
-            autoIncrement: true,
-            primaryKey: true,
-            unique: true
-          },
-          type: {
-            type: 'string'
-          },
-          bar: {
-            columnName: 'bar_id',
-            foreignKey: true,
-            references: 'bar',
-            on: 'id'
-          }
-        }
-      };
 
-      collections.bar = {
-        tableName: 'bar',
-        attributes: {
-          id: {
-            type: 'integer',
-            autoIncrement: true,
-            primaryKey: true,
-            unique: true
-          }
-        }
-      };
+      var collections = _.map(fixtures, function(obj) {
+        var collection = function() {};
+        collection.prototype = obj;
+        return collection;
+      });
+
+      // Build the schema
+      schema = SchemaBuilder(collections);
     });
 
-
     it('should update the parent collection to point to the join table', function() {
-      var obj = new References(collections);
-
-      assert(obj.foo.attributes.bars.references === 'foobar');
-      assert(obj.foo.attributes.bars.on === 'bar_id');
+      assert.equal(schema.foo.schema.bars.references, 'foobar');
+      assert.equal(schema.foo.schema.bars.on, 'foo_id');
     });
   });
 
