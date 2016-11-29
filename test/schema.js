@@ -202,6 +202,31 @@ describe('Schema Builder :: ', function() {
         }
       );
     });
+
+    it('should add a required flag', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          name: {
+            type: 'string'
+          }
+        }
+      };
+
+      assert.doesNotThrow(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+
+      var schema = SchemaBuilder([collection]);
+      assert.equal(schema.foo.attributes.name.required, false);
+    });
   });
 
 
