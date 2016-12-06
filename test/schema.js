@@ -366,6 +366,29 @@ describe('Schema Builder :: ', function() {
         }
       );
     });
+
+    it('should not allow plural associations to have a required flag', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          name: {
+            collection: 'bar',
+            required: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
   });
 
 
