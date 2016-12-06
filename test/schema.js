@@ -117,6 +117,29 @@ describe('Schema Builder :: ', function() {
         }
       );
     });
+
+    it('should NOT allow the primary key to have a defaultsTo value', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'baz',
+        attributes: {
+          bar: {
+            type: 'string'
+          },
+          baz: {
+            type: 'number',
+            defaultsTo: 123
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
   });
 
 
