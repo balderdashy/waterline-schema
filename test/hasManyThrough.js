@@ -141,5 +141,4 @@ describe('Has Many Through :: ', function() {
       assert.equal(schema.foo.schema.bars.on, 'foo_id');
     });
   });
-
 });

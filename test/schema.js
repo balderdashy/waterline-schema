@@ -2,7 +2,6 @@ var assert = require('assert');
 var SchemaBuilder = require('../lib/waterline-schema/schema');
 
 describe('Schema Builder :: ', function() {
-
   describe('Validating Identity', function() {
     it('should throw an error when a collection is missing an identity', function() {
       var collection = function() {};

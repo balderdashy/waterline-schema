@@ -74,6 +74,5 @@ describe('Reference Mapper :: ', function() {
       assert.equal(schema.foo.schema.bars.references, 'bar');
       assert.equal(schema.foo.schema.bars.on, 'foo_id');
     });
-
   });
 });
