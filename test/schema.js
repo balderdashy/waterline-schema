@@ -273,6 +273,30 @@ describe('Schema Builder :: ', function() {
         }
       );
     });
+
+    it('should prevent attributes from having a default value and a required flag', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          name: {
+            type: 'string',
+            defaultsTo: 'foo',
+            required: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
   });
 
 
