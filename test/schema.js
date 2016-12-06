@@ -297,6 +297,52 @@ describe('Schema Builder :: ', function() {
         }
       );
     });
+
+    it('should prevent attributes from having a default value that doesn\'t match its type', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          name: {
+            type: 'string',
+            defaultsTo: 123
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should allow attributes to have a default value that does match its type', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          name: {
+            type: 'number',
+            defaultsTo: 123
+          }
+        }
+      };
+
+      assert.doesNotThrow(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
   });
 
 
