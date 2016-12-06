@@ -343,6 +343,29 @@ describe('Schema Builder :: ', function() {
         }
       );
     });
+
+    it('should not allow associations to have default values', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          name: {
+            model: 'bar',
+            defaultsTo: 123
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
   });
 
 
