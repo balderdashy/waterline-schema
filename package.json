@@ -3,7 +3,8 @@
   "description": "The core schema builder used in the Waterline ORM.",
   "version": "1.0.0-1",
   "dependencies": {
-    "@sailshq/lodash": "^3.10.2"
+    "@sailshq/lodash": "^3.10.2",
+    "rttc": "9.8.2"
   },
   "devDependencies": {
     "mocha": "3.1.2"
