@@ -250,6 +250,29 @@ describe('Schema Builder :: ', function() {
       var schema = SchemaBuilder([collection]);
       assert.equal(schema.foo.attributes.name.required, false);
     });
+
+    it('should prevent attributes from having a null default value', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          name: {
+            type: 'string',
+            defaultsTo: null
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
   });
 
 
