@@ -4,7 +4,7 @@
   "version": "1.0.0-1",
   "dependencies": {
     "@sailshq/lodash": "^3.10.2",
-    "rttc": "9.8.2"
+    "rttc": "^10.0.0-1"
   },
   "devDependencies": {
     "eslint": "3.5.0",
