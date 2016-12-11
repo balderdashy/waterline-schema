@@ -9,7 +9,7 @@
   "devDependencies": {
     "eslint": "3.5.0",
     "espree": "3.3.0",
-    "mocha": "3.1.2"
+    "mocha": "3.0.2"
   },
   "keywords": [
     "mvc",
