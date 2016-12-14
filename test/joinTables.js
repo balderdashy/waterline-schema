@@ -257,7 +257,7 @@ describe('Join Table Mapper :: ', function() {
     it('should add a junction table for the self referencing attributes', function() {
       // Validate only a single join table gets setup
       assert(schema.foo_followedby__foo_isfollowing);
-      assert(!schema.foo_isfollowing__foo_followedby);
+      assert(!schema.foo_isfollowing__foo_followeby);
 
       assert(schema.foo_followedby__foo_isfollowing.schema.foo_isFollowing);
       assert.equal(schema.foo_followedby__foo_isfollowing.schema.foo_isFollowing.type, 'number');
@@ -275,9 +275,9 @@ describe('Join Table Mapper :: ', function() {
       assert.equal(schema.foo_followedby__foo_isfollowing.schema.foo_followedBy.on, 'id');
       assert.equal(schema.foo_followedby__foo_isfollowing.schema.foo_followedBy.groupKey, 'foo');
 
-      assert.equal(schema.foo.schema.isFollowing.references, 'foo_followedby__foo_isfollowing');
+      assert.equal(schema.foo.schema.isFollowing.references, 'foo_followedBy__foo_isFollowing');
       assert.equal(schema.foo.schema.isFollowing.on, 'foo_isFollowing');
-      assert.equal(schema.foo.schema.followedBy.references, 'foo_followedby__foo_isfollowing');
+      assert.equal(schema.foo.schema.followedBy.references, 'foo_isFollowing__foo_followedBy');
       assert.equal(schema.foo.schema.followedBy.on, 'foo_followedBy');
     });
   });
