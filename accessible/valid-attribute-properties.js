@@ -26,5 +26,6 @@ module.exports = [
   'defaultsTo',
   'meta',
   'autoMigrations',
+  'required',
   'validations'
 ];
