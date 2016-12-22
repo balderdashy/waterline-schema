@@ -405,6 +405,30 @@ describe('Schema Builder :: ', function() {
         }
       );
     });
+
+    it('should not allow both timestamp flags', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          timestamp: {
+            type: 'number',
+            autoUpdatedAt: true,
+            autoCreatedAt: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
   });
 
 
