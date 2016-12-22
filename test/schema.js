@@ -429,6 +429,54 @@ describe('Schema Builder :: ', function() {
         }
       );
     });
+
+    it('should not allow both an autoUpdatedAt timestamp and a required flag', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          timestamp: {
+            type: 'number',
+            autoUpdatedAt: true,
+            required: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should not allow both an autoCreatedAt timestamp and a required flag', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          timestamp: {
+            type: 'number',
+            autoCreatedAt: true,
+            required: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
   });
 
 
