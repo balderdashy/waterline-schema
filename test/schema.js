@@ -383,6 +383,29 @@ describe('Schema Builder :: ', function() {
       );
     });
 
+    it('should not allow singular associations to have a type', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          name: {
+            model: 'bar',
+            type: 'string'
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
     it('should not allow required values to have default values', function() {
       var collection = function() {};
       collection.prototype = {
