@@ -40,6 +40,23 @@ describe('Schema Builder :: ', function() {
       );
     });
 
+    it('should lowercase the identity', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'FOO',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          }
+        }
+      };
+
+      var schema = SchemaBuilder([collection]);
+      assert(schema.foo);
+      assert.equal(schema.foo.identity, 'foo');
+    });
+
     it('should allow tableName to suffice for identity', function() {
       var collection = function() {};
       collection.prototype = {
