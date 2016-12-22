@@ -383,6 +383,30 @@ describe('Schema Builder :: ', function() {
       );
     });
 
+    it('should not allow required values to have default values', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          name: {
+            type: 'string',
+            required: true,
+            defaultsTo: 'abc'
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
     it('should not allow plural associations to have a required flag', function() {
       var collection = function() {};
       collection.prototype = {
