@@ -405,6 +405,172 @@ describe('Schema Builder :: ', function() {
         }
       );
     });
+
+    it('should not allow both timestamp flags', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          timestamp: {
+            type: 'number',
+            autoUpdatedAt: true,
+            autoCreatedAt: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should not allow both an autoUpdatedAt timestamp and a required flag', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          timestamp: {
+            type: 'number',
+            autoUpdatedAt: true,
+            required: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should not allow both an autoCreatedAt timestamp and a required flag', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          timestamp: {
+            type: 'number',
+            autoCreatedAt: true,
+            required: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should not allow both an autoCreatedAt timestamp and a defaultsTo value', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          timestamp: {
+            type: 'number',
+            autoCreatedAt: true,
+            defaultsTo: 123
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should not allow both an autoUpdatedAt timestamp and a defaultsTo value', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          timestamp: {
+            type: 'number',
+            autoUpdatedAt: true,
+            defaultsTo: 123
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should not allow an autoCreatedAt timestamp to be a json type', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          timestamp: {
+            type: 'json',
+            autoCreatedAt: true,
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should not allow an autoUpdatedAt timestamp to be a json type', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          timestamp: {
+            type: 'json',
+            autoUpdatedAt: true,
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
   });
 
 
