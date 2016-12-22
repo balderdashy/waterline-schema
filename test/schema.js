@@ -525,6 +525,52 @@ describe('Schema Builder :: ', function() {
         }
       );
     });
+
+    it('should not allow an autoCreatedAt timestamp to be a json type', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          timestamp: {
+            type: 'json',
+            autoCreatedAt: true,
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should not allow an autoUpdatedAt timestamp to be a json type', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          timestamp: {
+            type: 'json',
+            autoUpdatedAt: true,
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
   });
 
 
