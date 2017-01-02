@@ -277,7 +277,7 @@ describe('Join Table Mapper :: ', function() {
 
       assert.equal(schema.foo.schema.isFollowing.references, 'foo_followedBy__foo_isFollowing');
       assert.equal(schema.foo.schema.isFollowing.on, 'foo_isFollowing');
-      assert.equal(schema.foo.schema.followedBy.references, 'foo_isFollowing__foo_followedBy');
+      assert.equal(schema.foo.schema.followedBy.references, 'foo_followedBy__foo_isFollowing');
       assert.equal(schema.foo.schema.followedBy.on, 'foo_followedBy');
     });
   });
