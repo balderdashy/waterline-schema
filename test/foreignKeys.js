@@ -135,4 +135,72 @@ describe('Foreign Key Mapper :: ', function() {
       assert.equal(barSchema.foo.on, 'id');
     });
   });
+
+  describe('With custom column type', function() {
+    var schema;
+
+    before(function() {
+      var fixtures = [
+        {
+          identity: 'foo',
+          primaryKey: 'id',
+          attributes: {
+            id: {
+              type: 'string'
+            }
+          }
+        },
+        {
+          identity: 'bar',
+          primaryKey: 'id',
+          attributes: {
+            id: {
+              type: 'number'
+            },
+            foo: {
+              model: 'foo',
+              autoMigrations: {
+                columnType: 'foobar'
+              }
+            }
+          }
+        }
+      ];
+
+      var collections = _.map(fixtures, function(obj) {
+        var collection = function() {};
+        collection.prototype = obj;
+        return collection;
+      });
+
+      // Build the schema
+      schema = SchemaBuilder(collections);
+    });
+
+    /**
+     * Test that a foreign key gets built for the bar table in the following structure:
+     *
+     * attributes: {
+     *   foo: {
+     *     columnName: 'foo',
+     *     type: 'number',
+     *     foreignKey: true,
+     *     references: 'foo',
+     *     on: 'id'
+     *   }
+     * }
+     */
+
+    it('should add a foreign key mapping to the bar collection', function() {
+      // Map out the foreign keys
+      ForeignKeyMapper(schema);
+      var barSchema = schema.bar.schema;
+
+      assert.equal(barSchema.foo.columnName, 'foo');
+      assert.equal(barSchema.foo.type, 'foobar');
+      assert.equal(barSchema.foo.foreignKey, true);
+      assert.equal(barSchema.foo.references, 'foo');
+      assert.equal(barSchema.foo.on, 'id');
+    });
+  });
 });
