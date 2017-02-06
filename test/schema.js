@@ -453,6 +453,29 @@ describe('Schema Builder :: ', function() {
       );
     });
 
+    it('should not allow plural associations to point at themselves', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          name: {
+            collection: 'bar',
+            via: 'name'
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
     it('should not allow both timestamp flags', function() {
       var collection = function() {};
       collection.prototype = {
