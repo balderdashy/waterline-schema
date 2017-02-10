@@ -463,7 +463,7 @@ describe('Schema Builder :: ', function() {
             type: 'number'
           },
           name: {
-            collection: 'bar',
+            collection: 'foo',
             via: 'name'
           }
         }
