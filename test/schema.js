@@ -1,4 +1,5 @@
 var assert = require('assert');
+var _ = require('@sailshq/lodash');
 var SchemaBuilder = require('../lib/waterline-schema/schema');
 
 describe('Schema Builder :: ', function() {
@@ -663,6 +664,143 @@ describe('Schema Builder :: ', function() {
       assert.throws(
         function() {
           SchemaBuilder([collection]);
+        }
+      );
+    });
+  });
+
+  describe('Validating Dominant Collection Flag', function() {
+    it('should error when dominant is used on a via-less association', function() {
+      var fixtures = [
+        {
+          identity: 'user',
+          primaryKey: 'id',
+          attributes: {
+            id: {
+              type: 'string',
+              columnName: '_id'
+            },
+
+            favoritePets: {
+              collection: 'pet',
+              dominant: true
+            }
+          }
+        },
+        {
+          identity: 'pet',
+          primaryKey: 'id',
+          attributes: {
+            id: {
+              type: 'string',
+              columnName: '_id'
+            }
+          }
+        },
+      ];
+
+      var collections = _.map(fixtures, function(obj) {
+        var collection = function() {};
+        collection.prototype = obj;
+        return collection;
+      });
+
+      assert.throws(
+        function() {
+          SchemaBuilder(collections);
+        }
+      );
+    });
+
+    it('should error when dominant is used on a non many-to-many association', function() {
+      var fixtures = [
+        {
+          identity: 'user',
+          primaryKey: 'id',
+          attributes: {
+            id: {
+              type: 'string',
+              columnName: '_id'
+            },
+
+            favoritePets: {
+              collection: 'pet',
+              via: 'owner',
+              dominant: true
+            }
+          }
+        },
+        {
+          identity: 'pet',
+          primaryKey: 'id',
+          attributes: {
+            id: {
+              type: 'string',
+              columnName: '_id'
+            },
+            owner: {
+              model: 'user'
+            }
+          }
+        },
+      ];
+
+      var collections = _.map(fixtures, function(obj) {
+        var collection = function() {};
+        collection.prototype = obj;
+        return collection;
+      });
+
+      assert.throws(
+        function() {
+          SchemaBuilder(collections);
+        }
+      );
+    });
+
+    it('should NOT error when dominant is used on a many-to-many association', function() {
+      var fixtures = [
+        {
+          identity: 'user',
+          primaryKey: 'id',
+          attributes: {
+            id: {
+              type: 'string',
+              columnName: '_id'
+            },
+
+            favoritePets: {
+              collection: 'pet',
+              via: 'owner',
+              dominant: true
+            }
+          }
+        },
+        {
+          identity: 'pet',
+          primaryKey: 'id',
+          attributes: {
+            id: {
+              type: 'string',
+              columnName: '_id'
+            },
+            owners: {
+              collection: 'user',
+              via: 'favoritePets'
+            }
+          }
+        },
+      ];
+
+      var collections = _.map(fixtures, function(obj) {
+        var collection = function() {};
+        collection.prototype = obj;
+        return collection;
+      });
+
+      assert.doesNotThrow(
+        function() {
+          SchemaBuilder(collections);
         }
       );
     });
