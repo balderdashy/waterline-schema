@@ -642,6 +642,121 @@ describe('Schema Builder :: ', function() {
         }
       );
     });
+
+    it('should not allow type json attributes to have an allowNull flag set to true', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          data: {
+            type: 'json',
+            allowNull: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should allow type json attributes to have an allowNull flag set to false', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          data: {
+            type: 'json',
+            allowNull: false
+          }
+        }
+      };
+
+      assert.doesNotThrow(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should not allow type ref attributes to have an allowNull flag set to true', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          data: {
+            type: 'ref',
+            allowNull: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should allow type ref attributes to have an allowNull flag set to false', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          data: {
+            type: 'ref',
+            allowNull: false
+          }
+        }
+      };
+
+      assert.doesNotThrow(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should allow type string attributes to have an allowNull flag set to true', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          data: {
+            type: 'string',
+            allowNull: true
+          }
+        }
+      };
+
+      assert.doesNotThrow(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
   });
 
 
