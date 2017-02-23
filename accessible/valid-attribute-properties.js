@@ -27,5 +27,7 @@ module.exports = [
   'meta',
   'autoMigrations',
   'required',
-  'validations'
+  'validations',
+  'allowNull',
+  'description'
 ];
