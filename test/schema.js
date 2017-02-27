@@ -803,6 +803,26 @@ describe('Schema Builder :: ', function() {
         }
       );
     });
+
+    it('should prevent the primary key from having an allowNull flag set to true', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number',
+            allowNull: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
   });
 
 
