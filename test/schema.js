@@ -895,6 +895,30 @@ describe('Schema Builder :: ', function() {
         }
       );
     });
+
+    it('should prevent an attribute with both defaultsTo set to null and an allowNull flag set to true', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number',
+          },
+          importantData: {
+            type: 'number',
+            allowNull: true,
+            defaultsTo: null
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
   });
 
 
