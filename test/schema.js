@@ -871,6 +871,30 @@ describe('Schema Builder :: ', function() {
         }
       );
     });
+
+    it('should prevent a required attribute from having an allowNull flag set to true', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number',
+          },
+          importantData: {
+            type: 'number',
+            required: true,
+            allowNull: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
   });
 
 
