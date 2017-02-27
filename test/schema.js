@@ -757,6 +757,168 @@ describe('Schema Builder :: ', function() {
         }
       );
     });
+
+    it('should prevent singular associations from having an allowNull flag set to true', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          data: {
+            model: 'foo',
+            allowNull: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should prevent plural associations from having an allowNull flag set to true', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          data: {
+            collection: 'foo',
+            allowNull: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should prevent the primary key from having an allowNull flag set to true', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number',
+            allowNull: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should prevent an autoCreatedAt timestamp from having an allowNull flag set to true', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          createdAt: {
+            type: 'number',
+            autoCreatedAt: true,
+            allowNull: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should prevent an autoUpdatedAt timestamp from having an allowNull flag set to true', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number',
+          },
+          updatedAt: {
+            type: 'number',
+            autoUpdatedAt: true,
+            allowNull: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should prevent a required attribute from having an allowNull flag set to true', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number',
+          },
+          importantData: {
+            type: 'number',
+            required: true,
+            allowNull: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should prevent an attribute with both defaultsTo set to null and an allowNull flag set to true', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number',
+          },
+          importantData: {
+            type: 'number',
+            allowNull: true,
+            defaultsTo: null
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
   });
 
 
