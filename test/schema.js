@@ -823,6 +823,54 @@ describe('Schema Builder :: ', function() {
         }
       );
     });
+
+    it('should prevent an autoCreatedAt timestamp from having an allowNull flag set to true', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number'
+          },
+          createdAt: {
+            type: 'number',
+            autoCreatedAt: true,
+            allowNull: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
+
+    it('should prevent an autoUpdatedAt timestamp from having an allowNull flag set to true', function() {
+      var collection = function() {};
+      collection.prototype = {
+        identity: 'foo',
+        primaryKey: 'id',
+        attributes: {
+          id: {
+            type: 'number',
+          },
+          updatedAt: {
+            type: 'number',
+            autoUpdatedAt: true,
+            allowNull: true
+          }
+        }
+      };
+
+      assert.throws(
+        function() {
+          SchemaBuilder([collection]);
+        }
+      );
+    });
   });
 
 
