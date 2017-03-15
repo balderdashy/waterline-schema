@@ -67,6 +67,7 @@ describe('Join Table Mapper :: ', function() {
       assert.equal(schema.bar_foos__foo_bars.schema.foo_bars.references, 'foo');
       assert.equal(schema.bar_foos__foo_bars.schema.foo_bars.on, 'id');
       assert.equal(schema.bar_foos__foo_bars.schema.foo_bars.groupKey, 'foo');
+      assert.equal(schema.bar_foos__foo_bars.schema.foo_bars.model, 'foo');
 
       assert(schema.bar_foos__foo_bars.schema.bar_foos);
       assert.equal(schema.bar_foos__foo_bars.schema.bar_foos.type, 'number');
@@ -75,6 +76,7 @@ describe('Join Table Mapper :: ', function() {
       assert.equal(schema.bar_foos__foo_bars.schema.bar_foos.references, 'bar');
       assert.equal(schema.bar_foos__foo_bars.schema.bar_foos.on, 'id');
       assert.equal(schema.bar_foos__foo_bars.schema.bar_foos.groupKey, 'bar');
+      assert.equal(schema.bar_foos__foo_bars.schema.bar_foos.model, 'bar');
     });
 
     it('should update the parent collection to point to the join table', function() {
