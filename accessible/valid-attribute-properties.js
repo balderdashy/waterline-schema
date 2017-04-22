@@ -29,5 +29,6 @@ module.exports = [
   'required',
   'validations',
   'allowNull',
-  'description'
+  'description',
+  'index'
 ];
