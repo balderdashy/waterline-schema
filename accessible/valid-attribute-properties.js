@@ -13,21 +13,34 @@
 //  ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝╚══════╝╚══════╝
 //
 module.exports = [
-  // Structure
+  // Basic semantics:
   'type',
-  'columnName',
+  'defaultsTo',
+  'required',
+  'allowNull',
+  'autoUpdatedAt',
+  'autoCreatedAt',
+
+  // Auto-migrations:
+  'autoMigrations',
+  
+  // High-level validation rules:
+  'validations',
+  
+  // Associations:
   'through',
   'collection',
   'model',
   'via',
   'dominant',
-  'autoUpdatedAt',
-  'autoCreatedAt',
-  'defaultsTo',
+
+  // Adapter:
+  'columnName',
   'meta',
-  'autoMigrations',
-  'required',
-  'validations',
-  'allowNull',
-  'description'
+  
+  // Advisory
+  'description',
+  'moreInfoUrl',
+  'example',
+  'protect'
 ];
