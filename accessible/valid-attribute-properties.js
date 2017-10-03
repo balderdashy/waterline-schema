@@ -23,10 +23,10 @@ module.exports = [
 
   // Auto-migrations:
   'autoMigrations',
-  
+
   // High-level validation rules:
   'validations',
-  
+
   // Associations:
   'through',
   'collection',
@@ -37,7 +37,7 @@ module.exports = [
   // Adapter:
   'columnName',
   'meta',
-  
+
   // Advisory
   'description',
   'moreInfoUrl',

@@ -7,7 +7,7 @@
     "rttc": "^10.0.0-1"
   },
   "devDependencies": {
-    "eslint": "3.5.0",
+    "eslint": "3.19.0",
     "mocha": "3.0.2"
   },
   "keywords": [
@@ -23,10 +23,9 @@
   "homepage": "http://github.com/balderdashy/waterline-schema",
   "main": "lib/waterline-schema.js",
   "scripts": {
-    "test": "NODE_ENV=test ./node_modules/mocha/bin/mocha test --recursive",
-    "fasttest": "node ./node_modules/mocha/bin/mocha test --recursive",
-    "pretest": "npm run lint",
-    "lint": "eslint lib test"
+    "custom-tests": "NODE_ENV=test node ./node_modules/mocha/bin/mocha test --reporter dot --recursive",
+    "test": "npm run lint && npm run custom-tests",
+    "lint": "node ./node_modules/eslint/bin/eslint . --max-warnings=0"
   },
   "license": "MIT",
   "bugs": {
