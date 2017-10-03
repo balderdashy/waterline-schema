@@ -38,9 +38,12 @@ module.exports = [
   'columnName',
   'meta',
 
+  // At-rest encryption:
+  'encrypt',
+
   // Advisory
   'description',
   'moreInfoUrl',
   'example',
-  'protect'
+  'protect',
 ];
