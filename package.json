@@ -4,6 +4,7 @@
   "version": "1.0.0-20",
   "dependencies": {
     "@sailshq/lodash": "^3.10.2",
+    "flaverr": "^1.8.1",
     "rttc": "^10.0.0-1"
   },
   "devDependencies": {
