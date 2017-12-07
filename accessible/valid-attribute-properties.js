@@ -43,6 +43,7 @@ module.exports = [
 
   // Advisory
   'description',
+  'extendedDescription',
   'moreInfoUrl',
   'example',
   'protect',
