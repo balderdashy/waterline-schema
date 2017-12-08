@@ -120,6 +120,11 @@ describe('Has Many Through :: ', function() {
           attributes: {
             id: {
               type: 'number'
+            },
+            foo: {
+              collection: 'foo',
+              through: 'foobar',
+              via: 'bar'
             }
           }
         }
