@@ -1,7 +1,7 @@
 {
   "name": "waterline-schema",
   "description": "The core schema builder used in the Waterline ORM.",
-  "version": "1.0.0-25",
+  "version": "1.0.0",
   "dependencies": {
     "@sailshq/lodash": "^3.10.2",
     "flaverr": "^1.8.1",
