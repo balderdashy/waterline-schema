@@ -47,4 +47,5 @@ module.exports = [
   'moreInfoUrl',
   'example',
   'protect',
+  'label',
 ];
