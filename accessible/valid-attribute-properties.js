@@ -47,4 +47,14 @@ module.exports = [
   'moreInfoUrl',
   'example',
   'protect',
+
+  // Request for Helm generator capabilities, for great, quick prototypes.  See commit log for explanation
+  'label',
+  'hideFromTable',
+  'hideFromForm',
+  'notEditable',
+  'toolTip',
+  'filterable',
+  'beforeFormRender',  // fn
+  'beforeIndexRender', // fn
 ];
